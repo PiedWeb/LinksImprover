@@ -54,4 +54,12 @@ class LinksManagerTest extends TestCase
         $this->assertSame($linksManager->getIterator()[0]->getUrl(), $this->getFirstUrl());
         $this->assertSame($linksManager->getIterator()[0]->getKws(), $this->getFirstKws());
     }
+
+    /** @test */
+    public function returnTest()
+    {
+        $linksManager = LinksManager::load($this->getRawData());
+
+        $this->assertTrue(is_string($this->getRawData())); // ppor test
+    }
 }

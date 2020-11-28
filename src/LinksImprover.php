@@ -10,6 +10,7 @@ class LinksImprover
     protected $existingLinks = [];
 
     protected $wordCount = 0;
+    protected $addedLinksCount = 0;
 
     public function __construct(string $content)
     {
@@ -57,6 +58,7 @@ class LinksImprover
                     $this ->content = $newContent;
                     $this->existingLinks[] = $link->getUrl();
                     $link->incrementCounter();
+                    $this->addedLinksCount++;
                 }
             }
         }
@@ -116,7 +118,7 @@ class LinksImprover
     /**
      * Get the value of wordCount
      */
-    public function getWordCount()
+    public function getWordCount(): int
     {
         return $this->wordCount;
     }
@@ -124,13 +126,26 @@ class LinksImprover
     /**
      * Get the value of existingLinks
      */
-    public function getExistingLinks()
+    public function getExistingLinks(): array
     {
         return $this->existingLinks;
     }
 
-    public function getLinksCount()
+    public function getLinksCount(): int
     {
         return count($this->getExistingLinks());
+    }
+
+    /**
+     * Get the value of addedLinksCount
+     */
+    public function getAddedLinksCount(): int
+    {
+        return $this->addedLinksCount;
+    }
+
+    public function resetAddedLinkCount(): void
+    {
+        $this->addedLinksCount = 0;
     }
 }

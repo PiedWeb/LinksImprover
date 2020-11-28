@@ -67,6 +67,21 @@ class LinksManager implements IteratorAggregate, Countable
         return new self($csv, $base);
     }
 
+    public function return()
+    {
+        $csv = 'url,kws,force,counter'.chr(10);
+
+        foreach ($this->get() as $l) {
+            $csv .= $l->getUrl().',';
+            $csv .= '"'.str_replace('"', '\"', implode(',', array_keys($l->getKws()))).'",';
+            $csv .= $l->getForce();
+            $csv .= $l->getCounter();
+            $csv .= chr(10);
+        }
+
+        return $csv;
+    }
+
     public function get()
     {
         return $this->getIterator();

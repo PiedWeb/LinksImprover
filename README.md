@@ -82,6 +82,13 @@ Will return
 </p>
 ```
 
+Other method
+
+```php
+$linksImprover->getAddedLinksCount();
+$linksImprover->resetAddedLinkCount();
+```
+
 ### Warning (and benefit)
 
 It don't compare link with or without host. So you can use it to link external website...
