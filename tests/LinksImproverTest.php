@@ -53,7 +53,7 @@ class LinksImproverTest extends TestCase
 
         $this->assertSame(
             $newContent,
-            str_replace('minim veniam', '<a href="https://lorem.com">minim veniam</a>', self::getHtml())
+            str_replace('Excepteur sint occaecat', '<a href="https://lorem.com">Excepteur sint occaecat</a>', self::getHtml())
         );
     }
 }

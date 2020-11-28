@@ -15,8 +15,8 @@ class LinksManagerTest extends TestCase
     public function getFirstKws()
     {
         return [
-            "Robin from Pied Web" => "Robin from Pied Web",
-            "Pied Web" => "Pied Web",
+            "Robin from Pied Web" => " Robin from Pied Web ",
+            "Pied Web" => " Pied Web ",
         ];
     }
 
