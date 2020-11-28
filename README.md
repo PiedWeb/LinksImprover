@@ -1,7 +1,7 @@
 # Links Improver
 
 **Improve the navigability of a website** by improving your internal linking
-... so **Increase your search rankings**
+... so **Increase your search rankings** (SEO).
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/piedweb/LinksImprover.svg?style=flat-square)](https://packagist.org/packages/piedweb/LinksImprover)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/piedweb/LinksImprover/Tests?label=tests)](https://github.com/PiedWeb/LinksImprover/actions)
