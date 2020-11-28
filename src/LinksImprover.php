@@ -43,8 +43,8 @@ class LinksImprover
                 $potentialAnchor = $matches[1];
                 if ($this->canWeCreateALink($potentialAnchor)) {
                     $newContent = substr($this->content, 0, strpos($this->content, $potentialAnchor));
-                    $newContent .= '<a href="'.$link->getUrl().'"'.($linkAttrToAdd ? ' '.$linkAttrToAdd:'').'>';
-                    $newContent .= $potentialAnchor.'</a>';
+                    $newContent .= ' <a href="'.$link->getUrl().'"'.($linkAttrToAdd ? ' '.$linkAttrToAdd:'').'>';
+                    $newContent .= trim($potentialAnchor).'</a> ';
                     $newContent .= substr($this->content, strpos($this->content, $potentialAnchor) + strlen($matches[1]));
                     $this ->content = $newContent;
                     $this->existingLinks[] = $link->getUrl();
@@ -120,6 +120,13 @@ class LinksImprover
     public function getExistingLinks(): array
     {
         return $this->existingLinks;
+    }
+
+    public function addExistingLink($link)
+    {
+        $this->existingLinks[] = $link;
+
+        return $this;
     }
 
     public function getLinksCount(): int

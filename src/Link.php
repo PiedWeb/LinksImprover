@@ -100,18 +100,16 @@ class Link
         $kws = explode(',', $kws);
 
         foreach ($kws as $kw) {
-            $this->kws[$kw] = str_replace('*', '[^<]*', preg_quote($kw));
-            /*
-            if (strpos($kw, '*') !== false) {
-
-            } else {
-                $this->kws[$kw] = $kw;
-            }/**/
+            $this->kws[$kw] = ' '.trim(str_replace('*', '[^<]*', preg_quote($kw, '/'))).' ';
         }
 
         uksort($this->kws, function ($a, $b) {
             return strlen($b) <=> strlen($a);
         });
+
+        if (empty($this->kws)) {
+            throw new \Exception('empty kws for '.$this->getUrl());
+        }
 
         return $this;
     }
