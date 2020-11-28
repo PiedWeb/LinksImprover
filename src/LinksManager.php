@@ -64,7 +64,7 @@ class LinksManager implements IteratorAggregate, Countable
             $csv = Reader::createFromString($raw);
         }
 
-        return new self($csv, $base);
+        return new self($csv->getRecords(), $base);
     }
 
     public function return()
