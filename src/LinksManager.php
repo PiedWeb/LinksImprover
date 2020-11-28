@@ -6,7 +6,7 @@ use Countable;
 use IteratorAggregate;
 use League\Csv\Reader;
 
-class LinksManager implements IteratorAggregate, Countable
+class LinksManager //implements IteratorAggregate, Countable
 {
     protected $values = [];
 

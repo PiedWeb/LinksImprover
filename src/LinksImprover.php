@@ -12,6 +12,8 @@ class LinksImprover
     protected $wordCount = 0;
     protected $addedLinksCount = 0;
 
+    protected $hrefRegex = '/href=(["\']([^"\'>]+)["\']|([^ >]+))/i';
+
     public function __construct(string $content)
     {
         $this->content = $content;
@@ -43,8 +45,7 @@ class LinksImprover
                 $potentialAnchor = $matches[1];
                 if ($this->canWeCreateALink($potentialAnchor)) {
                     $newContent = substr($this->content, 0, strpos($this->content, $potentialAnchor));
-                    $newContent .= ' <a href="'.$link->getUrl().'"'.($linkAttrToAdd ? ' '.$linkAttrToAdd:'').'>';
-                    $newContent .= trim($potentialAnchor).'</a> ';
+                    $newContent .= $this->createLink($link->getUrl(), $potentialAnchor, $linkAttrToAdd);
                     $newContent .= substr($this->content, strpos($this->content, $potentialAnchor) + strlen($matches[1]));
                     $this ->content = $newContent;
                     $this->existingLinks[] = $link->getUrl();
@@ -55,6 +56,11 @@ class LinksImprover
         }
 
         return $this->content;
+    }
+
+    protected function createLink($url, $anchor, $attr)
+    {
+        return ' <a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a> ';
     }
 
     protected function canWeCreateALink($word)
@@ -99,7 +105,7 @@ class LinksImprover
 
     protected function indexLinks()
     {
-        preg_match_all('/href=(["\']([^"\'>]+)["\']|([^ >]+))/i', $this->content, $matches);
+        preg_match_all($this->hrefRegex, $this->content, $matches);
 
         $matches = array_merge($matches[2], $matches[3]);
         $matches = array_filter($matches, fn ($value) => $value != '');
