@@ -21,15 +21,6 @@ class LinksImprover
         $this->indexLinks();
     }
 
-    public function getXmlContent()
-    {
-        if (! $this->xmlContent) {
-            $this->xmlContent = simplexml_load_file($this->content);
-        }
-
-        return $this->xmlContent;
-    }
-
     protected function linkEverExist($link)
     {
         if (in_array($link->getUrl(), $this->getExistingLinks())) { // it don't check without or with domain !!!
