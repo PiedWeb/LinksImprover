@@ -4,7 +4,7 @@
 ... so **Increase your search rankings**
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/piedweb/LinksImprover.svg?style=flat-square)](https://packagist.org/packages/piedweb/LinksImprover)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/piedweb/LinksImprover/run-tests?label=tests)](https://github.com/piedweb/LinksImprover/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/piedweb/LinksImprover/Tests?label=tests)](https://github.com/PiedWeb/LinksImprover/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/LinksImprover.svg?style=flat-square)](https://packagist.org/packages/piedweb/LinksImprover)
 
 **You are not a developper and want a ready product like a wordpress plugin, see [Link Whisper](https://linkwhisper.com/ref/644/) (af link).**
