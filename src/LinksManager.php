@@ -18,7 +18,6 @@ class LinksManager //implements IteratorAggregate, Countable
         // 2: force
         // 3: counter
      *
-     * @param array $values
      */
     public function __construct($values, $base = null)
     {
