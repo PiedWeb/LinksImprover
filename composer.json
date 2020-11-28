@@ -5,13 +5,13 @@
         "piedweb",
         "LinksImprover"
     ],
-    "homepage": "https://github.com/piedweb/LinksImprover",
+    "homepage": "https://dev.piedweb.com",
     "license": "MIT",
     "authors": [
         {
             "name": "Robin",
             "email": "contact@piedweb.com",
-            "homepage": "https://spatie.be",
+            "homepage": "https://dev.piedweb.com",
             "role": "Developer"
         }
     ],
