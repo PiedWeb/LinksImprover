@@ -66,5 +66,6 @@ class LinksImproverTest extends TestCase
 
         $this->assertSame($linksImprover->getAddedLinksCount(), 1) ;
         $this->assertSame($linksImprover->getAddedLinks(), [['Excepteur sint occaecat', 'https://lorem.com']]);
+        $this->assertSame($linksImprover->getAddedLinks(true), [ 'https://lorem.com']);
     }
 }

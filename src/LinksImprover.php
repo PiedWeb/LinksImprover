@@ -168,8 +168,12 @@ class LinksImprover
         return count($this->addedLinks);
     }
 
-    public function getAddedLinks()
+    public function getAddedLinks($urlOnly = false)
     {
+        if ($urlOnly) {
+            return array_column($this->addedLinks, 1);
+        }
+
         return $this->addedLinks;
     }
 }
