@@ -100,7 +100,7 @@ class Link
         $kws = explode(',', $kws);
 
         foreach ($kws as $kw) {
-            $this->kws[$kw] = ' '.trim(str_replace('*', '[^<]*', preg_quote($kw, '/'))).' ';
+            $this->kws[$kw] = ' '.trim(str_replace('*', '[^<]{0,10}', preg_quote($kw, '/'))).' ';
         }
 
         uksort($this->kws, function ($a, $b) {
