@@ -32,8 +32,8 @@ class LinksImproverBBCode extends LinksImprover
         return true;
     }
 
-    protected function createLink($url, $anchor, $attr)
+    protected function getLinkToAdd($url, $anchor, $attr)
     {
-        return ' [url='.$url.']'.trim($anchor).'[/url] ';
+        return ' [url='.(strpos($url, ' ') !== false?'"'.$url.'"':$url).']'.trim($anchor).'[/url] ';
     }
 }

@@ -86,7 +86,8 @@ Other method
 
 ```php
 $linksImprover->getAddedLinksCount();
-$linksImprover->resetAddedLinkCount();
+
+class:LinksImproverBBCode // Same api and search and replace for [url=*][/url]
 ```
 
 ### Warning (and benefit)

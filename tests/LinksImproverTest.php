@@ -56,4 +56,15 @@ class LinksImproverTest extends TestCase
             str_replace('Excepteur sint occaecat', '<a href="https://lorem.com">Excepteur sint occaecat</a>', self::getHtml())
         );
     }
+
+    /** @test */
+    public function addedLinksTest()
+    {
+        $linksImprover = new LinksImprover(self::getHtml());
+
+        $newContent = $linksImprover->improve(self::getLinksManager(), 1 / 20);
+
+        $this->assertSame($linksImprover->getAddedLinksCount(), 1) ;
+        $this->assertSame($linksImprover->getAddedLinks(), [['Excepteur sint occaecat', 'https://lorem.com']]);
+    }
 }

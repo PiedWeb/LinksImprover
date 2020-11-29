@@ -9,8 +9,16 @@ class LinksImprover
 
     protected $existingLinks = [];
 
+    /**
+     * Caching links added format
+     * [anchor, url],
+     * ...
+     *
+     * @var array
+     */
+    protected $addedLinks = [];
+
     protected $wordCount = 0;
-    protected $addedLinksCount = 0;
 
     protected $hrefRegex = '/href=(["\']([^"\'>]+)["\']|([^ >]+))/i';
 
@@ -41,24 +49,32 @@ class LinksImprover
                 continue;
             }
 
-            if (preg_match('/('.implode('|', $link->getKws()).')/si', $this->content, $matches)) {
-                $potentialAnchor = $matches[1];
-                if ($this->canWeCreateALink($potentialAnchor)) {
-                    $newContent = substr($this->content, 0, strpos($this->content, $potentialAnchor));
-                    $newContent .= $this->createLink($link->getUrl(), $potentialAnchor, $linkAttrToAdd);
-                    $newContent .= substr($this->content, strpos($this->content, $potentialAnchor) + strlen($matches[1]));
-                    $this ->content = $newContent;
-                    $this->existingLinks[] = $link->getUrl();
-                    $link->incrementCounter();
-                    $this->addedLinksCount++;
-                }
+            if (! preg_match('/('.implode('|', $link->getKws()).')/si', $this->content, $matches)) {
+                continue;
+            }
+
+            if ($this->canWeCreateALink($matches[1])) {
+                $this->createLink($link, $matches[1], $linkAttrToAdd);
             }
         }
 
         return $this->content;
     }
 
-    protected function createLink($url, $anchor, $attr)
+    protected function createLink(Link $link, $anchor, $attr)
+    {
+        $newContent = substr($this->content, 0, strpos($this->content, $anchor));
+        $newContent .= $this->getLinkToAdd($link->getUrl(), $anchor, $attr);
+        $newContent .= substr($this->content, strpos($this->content, $anchor) + strlen($anchor));
+        $this ->content = $newContent;
+
+        $this->existingLinks[] = $link->getUrl();
+        $this->addedLinks[] = [trim($anchor), $link->getUrl()];
+
+        $link->incrementCounter();
+    }
+
+    protected function getLinkToAdd($url, $anchor, $attr)
     {
         return ' <a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a> ';
     }
@@ -135,21 +151,25 @@ class LinksImprover
         return $this;
     }
 
+    public function addExistingLinks($links)
+    {
+        $this->existingLinks = array_merge($links, $this->existingLinks);
+
+        return $this;
+    }
+
     public function getLinksCount(): int
     {
         return count($this->getExistingLinks());
     }
 
-    /**
-     * Get the value of addedLinksCount
-     */
     public function getAddedLinksCount(): int
     {
-        return $this->addedLinksCount;
+        return count($this->addedLinks);
     }
 
-    public function resetAddedLinkCount(): void
+    public function getAddedLinks()
     {
-        $this->addedLinksCount = 0;
+        return $this->addedLinks;
     }
 }
