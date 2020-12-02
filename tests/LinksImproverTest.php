@@ -68,4 +68,12 @@ class LinksImproverTest extends TestCase
         $this->assertSame($linksImprover->getAddedLinks(), [['Excepteur sint occaecat', 'https://lorem.com']]);
         $this->assertSame($linksImprover->getAddedLinks(true), [ 'https://lorem.com']);
     }
+
+    /** @test */
+    public function addLinkOnTextInTagTest()
+    {
+        $linksImprover = new LinksImprover(self::getHtml().'<h3>Create a link on me</h3>');
+        $newContent = $linksImprover->improve(LinksManager::load('https://exemple.tld,"Create a link on me"'), 1 / 20);
+        $this->assertSame($linksImprover->getAddedLinksCount(), 1) ;
+    }
 }
