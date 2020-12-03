@@ -4,6 +4,7 @@ namespace Piedweb\LinksImprover;
 
 class LinksImprover
 {
+
     protected $linksManager;
     protected $content;
 
@@ -21,6 +22,18 @@ class LinksImprover
     protected $wordCount = 0;
 
     protected $hrefRegex = '/href=(["\']([^"\'>]+)["\']|([^ >]+))/i';
+
+    protected $tagsInsideLinkCouldBeAdded = [
+        'p', 'p ', 'span', 'span ', 'b', 'b ',
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ',
+    ];
+    const TAGS_EXTENDED = [
+        'p', 'p ', 'span', 'span ', 'b', 'b ',
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ',
+        'h2', 'h2 ', 'h3', 'h3 ', 'h4', 'h4 ', 'h5', 'h5 ',
+        'div', 'div ',
+    ];
+
 
     public function __construct(string $content)
     {
@@ -93,6 +106,13 @@ class LinksImprover
         return ' <a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a> ';
     }
 
+    public function setTagsInsideLinkCouldBeAdded(array $tags)
+    {
+        $this->tagsInsideLinkCouldBeAdded = $tags;
+
+        return $this;
+    }
+
     protected function canWeCreateALink($word)
     {
         $content = substr($this->content, 0, strpos($this->content, $word));
@@ -112,12 +132,7 @@ class LinksImprover
             return false;
         }
 
-        $tagsInsideWeAddALink = [
-            'h2', 'h2 ', 'h3', 'h3 ', 'h4', 'h4 ', 'h5', 'h5 ', 'p', 'p ', 'span', 'span ',
-            'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'div', 'div ',
-        ];
-
-        if (! in_array($match[1], $tagsInsideWeAddALink)) {
+        if (! in_array($match[1], $this->tagsInsideLinkCouldBeAdded)) {
             return false;
         }
 

@@ -85,7 +85,19 @@ Will return
 Other method
 
 ```php
+// Go further
+/**
+ * @param array
+ */
+$linksImprover->setTagsInsideLinkCouldBeAdded(LinksImprover::TAGS_EXTENDED);
+// Per default, the links could be added in p, strong, b, em, i and span.
+// Extenged tags add div and h[2-6]
+// You can suggest an array
+
+// Reporting
 $linksImprover->getAddedLinksCount();
+$linksImprover->getAddedLinks();
+$linksImprover->getExistingLinks();
 
 class:LinksImproverBBCode // Same api and search and replace for [url=*][/url]
 ```

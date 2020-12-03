@@ -73,6 +73,7 @@ class LinksImproverTest extends TestCase
     public function addLinkOnTextInTagTest()
     {
         $linksImprover = new LinksImprover(self::getHtml().'<h3>Create a link on me</h3>');
+        $linksImprover->setTagsInsideLinkCouldBeAdded(LinksImprover::TAGS_EXTENDED);
         $newContent = $linksImprover->improve(LinksManager::load('https://exemple.tld,"Create a link on me"'), 1 / 20);
         $this->assertSame($linksImprover->getAddedLinksCount(), 1) ;
     }
