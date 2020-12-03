@@ -4,7 +4,6 @@ namespace Piedweb\LinksImprover;
 
 class LinksImprover
 {
-
     protected $linksManager;
     protected $content;
 
@@ -33,7 +32,6 @@ class LinksImprover
         'h2', 'h2 ', 'h3', 'h3 ', 'h4', 'h4 ', 'h5', 'h5 ',
         'div', 'div ',
     ];
-
 
     public function __construct(string $content)
     {
@@ -70,7 +68,7 @@ class LinksImprover
                 continue;
             }
 
-            for ($i=1;$i<=4;$i++) {
+            for ($i = 1;$i <= 4;$i++) {
                 $var = 'matches'.$i;
                 if (isset($$var[1]) && $this->canWeCreateALink($$var[1])) {
                     $this->createLink($link, $$var[1], $linkAttrToAdd, $i === 1 ? false : true);
@@ -85,6 +83,7 @@ class LinksImprover
     {
         $str = str_replace('> <a href', '><a href', $str);
         $str = str_replace('</a> <', '</a><', $str);
+
         return preg_replace("/\s+/", ' ', $str);
     }
 
