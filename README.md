@@ -1,3 +1,7 @@
+<p align="center"><a href="https://dev.piedweb.com" rel="dofollow">
+<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
+</a></p>
+
 # Links Improver
 
 **Improve the navigability of a website** by improving your internal linking
