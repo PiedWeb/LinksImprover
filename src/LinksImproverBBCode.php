@@ -6,6 +6,8 @@ class LinksImproverBBCode extends LinksImprover
 {
     protected $hrefRegex = '/url=(["\']([^"\'\]]+)["\']|([^ \]]+))/i';
 
+    protected $base;
+
     protected function canWeCreateALink($wordPos)
     {
         $content = substr($this->content, 0, $wordPos);
@@ -34,6 +36,27 @@ class LinksImproverBBCode extends LinksImprover
 
     protected function getLinkToAdd($url, $anchor, $attr)
     {
-        return '[url='.(strpos($url, ' ') !== false?'"'.$url.'"':$url).']'.trim($anchor).'[/url]';
+        return '[url='.(strpos($url, ' ') !== false?'"'.$this->formatUrl($url).'"':$this->formatUrl($url)).']'.trim($anchor).'[/url]';
+    }
+
+    protected function formatUrl($url)
+    {
+        if ($url[0] == '/') {
+            return $this->base.$url;
+        }
+
+        return $url;
+    }
+
+    /**
+     * Set the value of base
+     *
+     * @return  self
+     */
+    public function setBase($base)
+    {
+        $this->base = $base;
+
+        return $this;
     }
 }
