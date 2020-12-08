@@ -60,49 +60,37 @@ class LinksImprover
                 continue;
             }
 
-            if (! preg_match('/('.implode('|', $link->getKws()).')/si', $this->content, $matches1)
-                && ! preg_match('/>('.implode(' |>', array_map("trim", $link->getKws())).') /si', $this->content, $matches2)
-                && ! preg_match('/ ('.implode('<| ', array_map("trim", $link->getKws())).')</si', $this->content, $matches3)
-                && ! preg_match('/>('.implode('>|<', array_map("trim", $link->getKws())).')</si', $this->content, $matches4)
-            ) {
+            if (! preg_match('/('.implode('|', $link->getKws()).')/si', $this->content, $matches, PREG_OFFSET_CAPTURE)) {
                 continue;
             }
 
-            for ($i = 1;$i <= 4;$i++) {
-                $var = 'matches'.$i;
-                if (isset($$var[1]) && $this->canWeCreateALink($$var[1])) {
-                    $this->createLink($link, $$var[1], $linkAttrToAdd, $i === 1 ? false : true);
-                }
+            $anchorTxt = $matches[3][0];
+            $anchorPos = $matches[3][1];
+
+            if ($this->canWeCreateALink($anchorPos)) {
+                $this->createLink($link, $anchorTxt, $anchorPos, $linkAttrToAdd);
             }
         }
 
         return $this->content;
     }
 
-    protected function advancedTrim($str)
+    protected function createLink(Link $link, $anchorTxt, $anchorPos, $attr)
     {
-        $str = str_replace('> <a href', '><a href', $str);
-        $str = str_replace('</a> <', '</a><', $str);
-
-        return preg_replace("/\s+/", ' ', $str);
-    }
-
-    protected function createLink(Link $link, $anchor, $attr, $trimed = false)
-    {
-        $newContent = substr($this->content, 0, strpos($this->content, $anchor));
-        $newContent .= $this->getLinkToAdd($link->getUrl(), $anchor, $attr);
-        $newContent .= substr($this->content, strpos($this->content, $anchor) + strlen($anchor));
-        $this ->content = $trimed ? $this->advancedTrim($newContent) : $newContent;
+        $newContent = substr($this->content, 0, $anchorPos);
+        $newContent .= $this->getLinkToAdd($link->getUrl(), $anchorTxt, $attr);
+        $newContent .= substr($this->content, $anchorPos + strlen($anchorTxt));
+        $this ->content = $newContent;
 
         $this->existingLinks[] = $link->getUrl();
-        $this->addedLinks[] = [trim($anchor), $link->getUrl()];
+        $this->addedLinks[] = [trim($anchorTxt), $link->getUrl()];
 
         $link->incrementCounter();
     }
 
     protected function getLinkToAdd($url, $anchor, $attr)
     {
-        return ' <a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a> ';
+        return '<a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a>';
     }
 
     public function setTagsInsideLinkCouldBeAdded(array $tags)
@@ -112,16 +100,16 @@ class LinksImprover
         return $this;
     }
 
-    protected function canWeCreateALink($word)
+    protected function canWeCreateALink($wordPos)
     {
-        $content = substr($this->content, 0, strpos($this->content, $word));
+        $content = substr($this->content, 0, $wordPos);
         //var_dump($content);
         // First we check if we are inside a tag
         if (preg_match('/[<](.)([^><]*)$/D', $content)) {
             return false;
         }
 
-        // If not, are we in a P tag or in a SPAN or
+        // If not, are we in a P tag or in a SPAN or... see self::$tagsInsideLinkCouldBeAdded
         if (! preg_match(
             '/<([a-z0-9]+ ?)[^>]*>([^<>])*$/D',
             preg_replace('/(<[^p\/].*>([^>]*)<\/[^p]*>)/i', '', $content), // we remove closed tags
@@ -135,7 +123,8 @@ class LinksImprover
             return false;
         }
 
-        if (preg_match('/<\/a>$/i', $content)) {// If yes, does the previous content is a word or a link
+        // If yes, does the previous content is a word or a link (avoiding successing links)
+        if (preg_match('/<\/a>\s+$/i', $content)) {
             return false;
         }
 

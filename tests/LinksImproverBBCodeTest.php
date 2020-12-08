@@ -24,7 +24,7 @@ class LinksImproverBBCodeTest extends TestCase
             'url,kws,force,counter'.chr(10)
             .'https://piedweb.com,"Pied Web,Robin from Pied Web",2,11'.chr(10)
             .'https://google.com,"Google,google.com",2,10'.chr(10)
-            .'https://lorem.com,"minim veniam,Excepteur sint occaecat",2,10'.chr(10)
+            .'https://lorem.com,"minim veniam2,Excepteur sint occaecat",2,10'.chr(10)
         );
     }
 

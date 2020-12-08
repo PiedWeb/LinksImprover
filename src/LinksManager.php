@@ -42,8 +42,14 @@ class LinksManager //implements IteratorAggregate, Countable
         }
     }
 
-    public function reOrder()
+    public function reOrder($sortByAnchorLenght = false)
     {
+        if ($sortByAnchorLenght) {
+            uasort($this->values, function ($a, $b) {
+                return strlen(implode('|', $b->getKws())) - strlen(implode('|', $a->getKws()));
+            });
+        }
+
         // On trie d'abord par counter (les plus petits compteurs d'abord)
         uasort($this->values, function ($a, $b) {
             return $a->getCounter() <=> $b->getCounter();

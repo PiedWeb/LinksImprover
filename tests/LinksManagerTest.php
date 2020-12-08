@@ -12,14 +12,6 @@ class LinksManagerTest extends TestCase
         return 'https://piedweb.com';
     }
 
-    public function getFirstKws()
-    {
-        return [
-            "Robin from Pied Web" => " Robin from Pied Web ",
-            "Pied Web" => " Pied Web ",
-        ];
-    }
-
     public function getRawData()
     {
         return 'url,kws,force,counter'.chr(10)
@@ -34,7 +26,6 @@ class LinksManagerTest extends TestCase
         $linksManager = LinksManager::load($this->getRawData());
 
         $this->assertSame($linksManager->getIterator()[0]->getUrl(), $this->getFirstUrl());
-        $this->assertSame($linksManager->getIterator()[0]->getKws(), $this->getFirstKws());
     }
 
     /** @test */
@@ -52,7 +43,6 @@ class LinksManagerTest extends TestCase
         $linksManager = LinksManager::load(dirname(__FILE__).'/links.csv');
 
         $this->assertSame($linksManager->getIterator()[0]->getUrl(), $this->getFirstUrl());
-        $this->assertSame($linksManager->getIterator()[0]->getKws(), $this->getFirstKws());
     }
 
     /** @test */
