@@ -100,6 +100,13 @@ class LinksImprover
         return $this;
     }
 
+    protected function removeClosedTags($rawHtml)
+    {
+        $rawHtml = preg_replace('/(<([^ \/>]+).*>([^>]*)<\/(\2)>)/', '', $rawHtml);
+
+        return preg_match('/(<([^ \/>]+).*>([^>]*)<\/(\2)>)/', $rawHtml) ? $this->removeClosedTags($rawHtml) : $rawHtml;
+    }
+
     protected function canWeCreateALink($wordPos)
     {
         $content = substr($this->content, 0, $wordPos);
@@ -110,12 +117,7 @@ class LinksImprover
         }
 
         // If not, are we in a P tag or in a SPAN or... see self::$tagsInsideLinkCouldBeAdded
-        if (! preg_match(
-            '/<([a-z0-9]+ ?)[^>]*>([^<>])*$/D',
-            preg_replace('/(<[^p\/].*>([^>]*)<\/[^p]*>)/i', '', $content), // we remove closed tags
-            $match
-        )
-            ) {
+        if (! preg_match('/<([a-z0-9]+ ?)[^>]*>([^<>])*$/D', $this->removeClosedTags($content), $match)) {
             return false;
         }
 
