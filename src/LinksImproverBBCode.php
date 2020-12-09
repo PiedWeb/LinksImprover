@@ -8,6 +8,13 @@ class LinksImproverBBCode extends LinksImprover
 
     protected $base;
 
+    protected function removeClosedTags($rawHtml)
+    {
+        $rawHtml = preg_replace('/(\[([^ \/\]]+).*\]([^\]]*)\[\/(\2)\])/', '', $rawHtml);
+
+        return preg_match('/(\[([^ \/\]]+).*\]([^\]]*)\[\/(\2)\])/', $rawHtml) ? $this->removeClosedTags($rawHtml) : $rawHtml;
+    }
+
     protected function canWeCreateALink($wordPos)
     {
         $content = substr($this->content, 0, $wordPos);
@@ -20,7 +27,7 @@ class LinksImproverBBCode extends LinksImprover
         // Are we in an other bbc tag
         if (preg_match(
             '/\[([^\]]* ?)[^\]]*\]([^\[\]])*$/D',
-            preg_replace('/(\[[^p].*\]([^\]]*)\[\/[^p]*\])/i', '', $content), // we remove closed tags
+            $this->removeClosedTags($content), // we remove closed tags
             $match
         )
             ) {

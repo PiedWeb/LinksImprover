@@ -100,6 +100,10 @@ class Link
         $kws = explode(',', $kws);
 
         foreach ($kws as $kw) {
+            if (empty($kw)) {
+                continue;
+            }
+
             $kw = preg_quote($kw, '/');
             $kw = str_replace('\*', '[^<]{0,10}', $kw);
             $kw = '([\]|>| ])('.$kw.')([\[|<]\/|[,\. ])';
