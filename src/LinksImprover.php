@@ -24,11 +24,11 @@ class LinksImprover
 
     protected $tagsInsideLinkCouldBeAdded = [
         'p', 'p ', 'span', 'span ', 'b', 'b ',
-        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li',
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li '
     ];
     const TAGS_EXTENDED = [
         'p', 'p ', 'span', 'span ', 'b', 'b ',
-        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li',
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li '
         'h2', 'h2 ', 'h3', 'h3 ', 'h4', 'h4 ', 'h5', 'h5 ',
         'div', 'div ',
     ];
