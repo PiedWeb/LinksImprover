@@ -97,22 +97,22 @@ class LinksManager //implements IteratorAggregate, Countable
         return array_values($this->values);
     }
 
-    public function clear() : void
+    public function clear(): void
     {
         $this->values = [];
     }
 
-    public function copy() : LinksManager
+    public function copy(): LinksManager
     {
         return new LinksManager($this->values);
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return empty($this->values);
     }
 
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->values;
     }

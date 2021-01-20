@@ -43,7 +43,7 @@ class LinksImproverBBCode extends LinksImprover
 
     protected function getLinkToAdd($url, $anchor, $attr)
     {
-        return '[url='.(strpos($url, ' ') !== false?'"'.$this->formatUrl($url).'"':$this->formatUrl($url)).']'.trim($anchor).'[/url]';
+        return '[url='.(strpos($url, ' ') !== false ? '"'.$this->formatUrl($url).'"' : $this->formatUrl($url)).']'.trim($anchor).'[/url]';
     }
 
     protected function formatUrl($url)
