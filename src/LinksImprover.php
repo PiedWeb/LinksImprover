@@ -24,11 +24,11 @@ class LinksImprover
 
     protected $tagsInsideLinkCouldBeAdded = [
         'p', 'p ', 'span', 'span ', 'b', 'b ',
-        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li '
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li ',
     ];
-    const TAGS_EXTENDED = [
+    public const TAGS_EXTENDED = [
         'p', 'p ', 'span', 'span ', 'b', 'b ',
-        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li '
+        'strong', 'strong ', 'em', 'em ', 'i', 'i ', 'li', 'li ',
         'h2', 'h2 ', 'h3', 'h3 ', 'h4', 'h4 ', 'h5', 'h5 ',
         'div', 'div ',
     ];
@@ -49,7 +49,7 @@ class LinksImprover
         }
     }
 
-    public function improve(LinksManager $linksManager, $maxLink, $linkAttrToAdd = '') : string
+    public function improve(LinksManager $linksManager, $maxLink, $linkAttrToAdd = ''): string
     {
         foreach ($linksManager->get() as $link) {
             if ($this->mustStop($maxLink)) {
@@ -90,7 +90,7 @@ class LinksImprover
 
     protected function getLinkToAdd($url, $anchor, $attr)
     {
-        return '<a href="'.$url.'"'.($attr ? ' '.$attr:'').'>'.trim($anchor).'</a>';
+        return '<a href="'.$url.'"'.($attr ? ' '.$attr : '').'>'.trim($anchor).'</a>';
     }
 
     public function setTagsInsideLinkCouldBeAdded(array $tags)
